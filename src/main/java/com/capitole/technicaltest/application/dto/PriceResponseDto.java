@@ -14,6 +14,6 @@ public class PriceResponseDto {
 	private int productId;
 	private int brandId;
 	private int rateToApply;
-	private List<ApplicationDataRangeDto> applicationDataRange;
+	private List<ApplicationDateRangeDto> applicationDateRange;
 	private double finalPrice;
 }

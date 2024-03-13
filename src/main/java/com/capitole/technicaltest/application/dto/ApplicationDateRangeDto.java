@@ -5,11 +5,11 @@ import java.util.Date;
 import lombok.Getter;
 
 @Getter
-public class ApplicationDataRangeDto {
+public class ApplicationDateRangeDto {
 	private final String type;
 	private final Date value;
 	
-	private ApplicationDataRangeDto(Builder builder) {
+	private ApplicationDateRangeDto(Builder builder) {
         this.type = builder.type;
         this.value = builder.value;
     }
@@ -23,8 +23,8 @@ public class ApplicationDataRangeDto {
             this.value = value;
         }
         
-        public ApplicationDataRangeDto build() {
-            return new ApplicationDataRangeDto(this);
+        public ApplicationDateRangeDto build() {
+            return new ApplicationDateRangeDto(this);
         }
 	}
 }
