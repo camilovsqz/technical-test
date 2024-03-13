@@ -7,7 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+/**
+ * The Class Brand.
+ * Reference to the Brands table, group brands.
+ */
 @Entity
 @Table(name = "BRANDS")
 @Getter
@@ -15,8 +18,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Brand {
+	/** The id. */
 	@Id
 	private String id;
 	
+	/** The brand name. */
 	private String name;
 }
