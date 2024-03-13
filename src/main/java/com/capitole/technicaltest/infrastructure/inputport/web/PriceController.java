@@ -2,6 +2,8 @@ package com.capitole.technicaltest.infrastructure.inputport.web;
 
 
 
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,9 +27,13 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class PriceController {
 	private final PriceService priceService;
+	
 	@GetMapping
 	public ResponseEntity<PriceResponseDto> getPrice(@Valid @ModelAttribute SearchParamsDto params) {
 		log.info(params.toString());
-		return new ResponseEntity<> (priceService.searchPrice(params), HttpStatus.OK);		
+		Optional<PriceResponseDto> priceOptional = priceService.searchPrice(params); 
+		return priceOptional
+				.map(result -> ResponseEntity.ok().body(result)) 
+				.orElseGet(() -> ResponseEntity.notFound().build()); 
 	}
 }

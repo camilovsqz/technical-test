@@ -14,4 +14,4 @@ spring:
       enabled: true
   flyway:
     locations:
-      classpath:db/migrations
+      classpath:db/migration
