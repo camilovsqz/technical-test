@@ -1,1 +1,17 @@
-spring.application.name=technical-test
+spring:
+  application:
+    name:
+      technical-test
+  datasource:
+    url: jdbc:h2:mem:test-db
+    driverClassName: org.h2.Driver
+    username: sa
+    password: changeit.1234
+  jpa:
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+  flyway:
+    locations:
+      classpath:db/migrations
