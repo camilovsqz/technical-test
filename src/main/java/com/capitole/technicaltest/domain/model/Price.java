@@ -5,14 +5,12 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 /**
  * The Class Price.
  * Reference to the PRICES domain
  */
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class Price {
 	/** The id. */
