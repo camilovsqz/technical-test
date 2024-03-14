@@ -23,7 +23,6 @@ import lombok.ToString;
 @Table(name = "PRICES")
 @Getter
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class PriceEntity {
