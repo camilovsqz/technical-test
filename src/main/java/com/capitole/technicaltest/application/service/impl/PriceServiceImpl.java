@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capitole.technicaltest.application.constant.AppConstant;
+import com.capitole.technicaltest.application.constant.LogConstant;
 import com.capitole.technicaltest.application.dto.ApplicationDateRangeDto;
 import com.capitole.technicaltest.application.dto.PriceResponseDto;
 import com.capitole.technicaltest.application.dto.SearchParamsDto;
@@ -28,15 +29,18 @@ public class PriceServiceImpl implements PriceService {
 
 	@Override
 	public Optional<PriceResponseDto> searchPrice(SearchParamsDto params) {
+		log.debug(LogConstant.CALLING_PORT, params.toString());
 		List<Price> priceList = pricePercistencePort.findAllByAplicationDateAndProductIdAndBrandId(
 				params.getApplicationDate(), params.getProductIdentifier(), params.getBrandIdentifier());
 
 		if (priceList.isEmpty()) {
+			log.info(LogConstant.NOT_FOUND_PRICE);
 			return Optional.empty();
 		}
-
+		log.debug(LogConstant.PRICE_FOUND, priceList.toString());
 		Price pricePriority = priceList.stream().max((p1, p2) -> Integer.compare(p1.getPriority(), p2.getPriority()))
 				.get();
+		log.debug(LogConstant.PRICE_FILTER, priceList.toString());
 
 		ApplicationDateRangeDto startDate = new ApplicationDateRangeDto().builder().type(AppConstant.START_DATE)
 				.value(DateUtil.dateToStringFormat(pricePriority.getStartDate())).build();
