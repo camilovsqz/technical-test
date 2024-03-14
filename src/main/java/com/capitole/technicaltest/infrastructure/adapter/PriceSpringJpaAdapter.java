@@ -14,12 +14,10 @@ import com.capitole.technicaltest.infrastructure.adapter.repository.PriceReposit
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
-@Slf4j
 public class PriceSpringJpaAdapter implements PricePercistencePort {
 	private final PriceDboMapper priceDboMapper;
 	private final PriceRepository priceRepository;
