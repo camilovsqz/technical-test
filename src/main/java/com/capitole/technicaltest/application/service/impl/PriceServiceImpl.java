@@ -20,13 +20,24 @@ import com.capitole.technicaltest.domain.port.PricePercistencePort;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * The Class PriceServiceImpl.
+ * Application logic to obtain the PRICE that applies according to the request
+ */
 @Service
 @Slf4j
 public class PriceServiceImpl implements PriceService {
 
+	/** The price percistence port. */
 	@Autowired
 	private PricePercistencePort pricePercistencePort;
 
+	/**
+	 * Search price.
+	 *
+	 * @param params the params
+	 * @return the optional
+	 */
 	@Override
 	public Optional<PriceResponseDto> searchPrice(SearchParamsDto params) {
 		log.debug(LogConstant.CALLING_PORT, params.toString());

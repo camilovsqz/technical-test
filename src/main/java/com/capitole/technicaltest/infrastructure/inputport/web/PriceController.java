@@ -20,14 +20,25 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * The Class PriceController.
+ */
 @RestController
 @RequestMapping("/v1/prices")
 @Slf4j
 @Validated
 @RequiredArgsConstructor
 public class PriceController {
+	
+	/** The price service. */
 	private final PriceService priceService;
 	
+	/**
+	 * Gets the price.
+	 *
+	 * @param params the params
+	 * @return the price
+	 */
 	@GetMapping
 	public ResponseEntity<PriceResponseDto> getPrice(@Valid @ModelAttribute SearchParamsDto params) {
 		log.info(LogConstant.NEW_PRICE_SEARCH);
