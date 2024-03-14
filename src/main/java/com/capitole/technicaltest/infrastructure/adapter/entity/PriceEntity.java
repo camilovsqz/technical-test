@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * The Class Price.
@@ -22,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "PRICES")
 @Getter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class PriceEntity {
