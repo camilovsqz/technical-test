@@ -17,7 +17,6 @@ import com.capitole.technicaltest.application.dto.SearchParamsDto;
 import com.capitole.technicaltest.application.service.PriceService;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
