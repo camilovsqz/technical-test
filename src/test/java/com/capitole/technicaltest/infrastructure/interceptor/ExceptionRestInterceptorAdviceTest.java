@@ -26,13 +26,13 @@ public class ExceptionRestInterceptorAdviceTest {
 	private ExceptionRestInterceptorAdvice exceptionRestInterceptor;
 
 	@Test
-	public void ifValidExceptionClass_ReturnErrorMessage() {
+	public void ifValidExceptionClass_thenReturnErrorMessage() {
 		ResponseEntity<ErrorMessageDto> exeptionResponse = exceptionRestInterceptor.defaultExceptionHandler(exception);
 		Assertions.assertNotNull(exeptionResponse);
 	}
 	
 	@Test
-	public void ifValidMethodArgumentNotValidException_ReturnErrorMessage() {
+	public void ifValidMethodArgumentNotValidException_thenReturnErrorMessage() {
 		BindingResult error = Mockito.mock(BindingResult.class);
 		Mockito.when(methodArgumentNotValidException.getBindingResult()).thenReturn(error);
 		Mockito.when(error.getFieldError()).thenReturn(new FieldError("","",""));

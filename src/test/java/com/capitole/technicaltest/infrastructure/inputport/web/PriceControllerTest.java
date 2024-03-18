@@ -32,20 +32,20 @@ public class PriceControllerTest {
 	}
 
 	@Test
-	public void ifSearchPrice_ReturnHttp200() throws Exception {
+	public void ifSearchPrice_thenReturnHttp200() throws Exception {
 		this.mockMvc.perform(get("/v1/prices?applicationDate=2020-06-14 18:30:00&productIdentifier=35455&brandIdentifier=1")
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
 	}
 
 	@Test
-	public void ifSearchPrice_ReturnHttp400() throws Exception {
+	public void ifSearchPrice_thenReturnHttp400() throws Exception {
 		this.mockMvc.perform(get("/v1/prices?applicationDate=2020-06-14 18:30:00&productIdentifier=35455")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isBadRequest());
 	}
 
 	@Test
-	public void ifSearchPrice_ReturnHttp404() throws Exception {
+	public void ifSearchPrice_thenReturnHttp404() throws Exception {
 		PriceService priceService = new PriceServiceImpl(new EmptyPricePercistencePortMock());
         priceController = new PriceController(priceService);
         this.mockMvc = MockMvcBuilders.standaloneSetup(priceController).build();

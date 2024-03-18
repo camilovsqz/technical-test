@@ -17,7 +17,7 @@ import com.capitole.technicaltest.domain.port.PricePercistencePort;
 public class PriceServiceImplTest {
 
 	@Test
-	public void ifSearchPrice_ReturnPrices() {
+	public void ifSearchPrice_thenReturnPrices() {
 		PricePercistencePort pricePercistencePort = new PricePercistencePortMock();
         PriceServiceImpl priceServiceImpl = new PriceServiceImpl(pricePercistencePort);
 		
@@ -35,7 +35,7 @@ public class PriceServiceImplTest {
 	}
 
 	@Test
-	public void ifSearchPrice_ReturnOptionalEmpty() {
+	public void ifSearchPrice_thenReturnOptionalEmpty() {
 		PricePercistencePort pricePercistencePort = new EmptyPricePercistencePortMock();
         PriceServiceImpl priceServiceImpl = new PriceServiceImpl(pricePercistencePort);
         
