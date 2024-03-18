@@ -27,12 +27,21 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/prices")
 @Slf4j
 @Validated
-@RequiredArgsConstructor
 public class PriceController {
 	
 	/** The price service. */
 	private final PriceService priceService;
 	
+	
+	/**
+	 * Instantiates a new price controller.
+	 *
+	 * @param priceService the price service
+	 */
+	public PriceController(PriceService priceService) {
+		this.priceService = priceService;
+	}
+
 	/**
 	 * Gets the price.
 	 *

@@ -1,7 +1,7 @@
 package com.capitole.technicaltest.application.service.impl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +29,16 @@ import lombok.extern.slf4j.Slf4j;
 public class PriceServiceImpl implements PriceService {
 
 	/** The price percistence port. */
-	@Autowired
-	private PricePercistencePort pricePercistencePort;
+	private final PricePercistencePort pricePercistencePort;	
+	
+	/**
+	 * Instantiates a new price service impl.
+	 *
+	 * @param pricePercistencePort the price percistence port
+	 */
+	public PriceServiceImpl(PricePercistencePort pricePercistencePort) {
+		this.pricePercistencePort = pricePercistencePort;
+	}
 
 	/**
 	 * Search price.
@@ -40,7 +48,6 @@ public class PriceServiceImpl implements PriceService {
 	 */
 	@Override
 	public Optional<PriceResponseDto> searchPrice(SearchParamsDto params) {
-		log.debug(LogConstant.CALLING_PORT, params.toString());
 		List<Price> priceList = pricePercistencePort.findAllByAplicationDateAndProductIdAndBrandId(
 				params.getApplicationDate(), params.getProductIdentifier(), params.getBrandIdentifier());
 
@@ -48,21 +55,33 @@ public class PriceServiceImpl implements PriceService {
 			log.info(LogConstant.NOT_FOUND_PRICE);
 			return Optional.empty();
 		}
-		log.debug(LogConstant.PRICE_FOUND, priceList.toString());
 		Price pricePriority = priceList.stream().max((p1, p2) -> Integer.compare(p1.getPriority(), p2.getPriority()))
 				.get();
-		log.debug(LogConstant.PRICE_FILTER, priceList.toString());
 
-		ApplicationDateRangeDto startDate = new ApplicationDateRangeDto().builder().type(AppConstant.START_DATE)
-				.value(DateUtil.dateToStringFormat(pricePriority.getStartDate())).build();
-		ApplicationDateRangeDto endDate = new ApplicationDateRangeDto().builder().type(AppConstant.END_DATE)
-				.value(DateUtil.dateToStringFormat(pricePriority.getEndDate())).build();
+		ApplicationDateRangeDto startDate = createDateRangeDto(AppConstant.START_DATE, pricePriority.getStartDate());
+		ApplicationDateRangeDto endDate = createDateRangeDto(AppConstant.END_DATE, pricePriority.getEndDate());
 
-		PriceResponseDto priceResponseDto = new PriceResponseDto().builder().productId(pricePriority.getProductId())
+		PriceResponseDto priceResponseDto = new PriceResponseDto().builder()
+				.productId(pricePriority.getProductId())
 				.brandId(pricePriority.getBrandId()).rateToApply(pricePriority.getPriceList())
-				.applicationDateRange(new ArrayList<>(Arrays.asList(startDate, endDate)))
+				.applicationDateRange(Arrays.asList(startDate, endDate))
 				.finalPrice(pricePriority.getPrice()).build();
 		return Optional.ofNullable(priceResponseDto);
+	}
+
+	/**
+	 * Creates the date range dto.
+	 * Utility method to create ApplicationDateRangeDto
+	 *
+	 * @param type the type
+	 * @param value the value
+	 * @return the application date range dto
+	 */
+	private ApplicationDateRangeDto createDateRangeDto(String type, Date value) {
+	    return ApplicationDateRangeDto.builder()
+	            .type(type)
+	            .value(DateUtil.dateToStringFormat(value))
+	            .build();
 	}
 
 }
