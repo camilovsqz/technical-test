@@ -1,63 +1,72 @@
 package com.capitole.technicaltestcom.capitole.technicaltest.infrastructure.inputport.web;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.capitole.technicaltest.application.dto.PriceResponseDto;
 import com.capitole.technicaltest.application.service.PriceService;
+import com.capitole.technicaltest.application.service.impl.PriceServiceImpl;
+import com.capitole.technicaltest.domain.model.Price;
+import com.capitole.technicaltest.domain.port.PricePercistencePort;
 import com.capitole.technicaltest.infrastructure.inputport.web.PriceController;
 
 public class PriceControllerTest {
 
-	@InjectMocks
 	private PriceController priceController;
-
-	@Mock
-	private PriceService priceService;
-
 	private MockMvc mockMvc;
 
 	@BeforeEach
 	public void init() {
-		MockitoAnnotations.openMocks(this);
-		this.mockMvc = MockMvcBuilders.standaloneSetup(priceController).build();
+		PriceService priceService = new PriceServiceImpl(new PricePercistencePortMock());
+        priceController = new PriceController(priceService);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(priceController).build();
 	}
 
 	@Test
 	public void ifSearchPrice_ReturnHttp200() throws Exception {
-		Mockito.when(priceService.searchPrice(any())).thenReturn(Optional.ofNullable(new PriceResponseDto()));
-		this.mockMvc
-				.perform(get("/v1/prices?applicationDate=2020-06-14 18:30:00&productIdentifier=35455&brandIdentifier=1")
-						.contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(status().isOk());
+		this.mockMvc.perform(get("/v1/prices?applicationDate=2020-06-14 18:30:00&productIdentifier=35455&brandIdentifier=1")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk());
 	}
 
 	@Test
 	public void ifSearchPrice_ReturnHttp400() throws Exception {
-		Mockito.when(priceService.searchPrice(any())).thenReturn(Optional.ofNullable(new PriceResponseDto()));
 		this.mockMvc.perform(get("/v1/prices?applicationDate=2020-06-14 18:30:00&productIdentifier=35455")
-				.contentType(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isBadRequest());
+                .contentType(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isBadRequest());
 	}
 
 	@Test
 	public void ifSearchPrice_ReturnHttp404() throws Exception {
-		Mockito.when(priceService.searchPrice(any())).thenReturn(Optional.empty());
-		this.mockMvc
-				.perform(get("/v1/prices?applicationDate=2020-06-14 18:30:00&productIdentifier=35455&brandIdentifier=1")
-						.contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(status().isNotFound());
+		PriceService priceService = new PriceServiceImpl(new EmptyPricePercistencePortMock());
+        priceController = new PriceController(priceService);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(priceController).build();
+		this.mockMvc.perform(get("/v1/prices?applicationDate=2020-06-14 18:30:00&productIdentifier=35455&brandIdentifier=1")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound());
 	}
+	
+	private static class PricePercistencePortMock implements PricePercistencePort {
+        @Override
+        public List<Price> findAllByAplicationDateAndProductIdAndBrandId(Date applicationDate, int productId, int brandId) {
+            return new ArrayList<>(Arrays.asList(
+                    new Price(1, 1, new Date(1592107200L), new Date(1609469999L), 1, 35455, 0, 35.50, "EUR")));
+        }
+    }
+	
+	private static class EmptyPricePercistencePortMock implements PricePercistencePort {
+        @Override
+        public List<Price> findAllByAplicationDateAndProductIdAndBrandId(Date applicationDate, int productId, int brandId) {
+            return new ArrayList<>();
+        }
+    }
 }
