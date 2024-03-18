@@ -1,4 +1,4 @@
-package com.capitole.technicaltestcom.capitole.technicaltest.infrastructure.inputport.web;
+package com.capitole.technicaltest.infrastructure.inputport.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -18,7 +18,6 @@ import com.capitole.technicaltest.application.service.PriceService;
 import com.capitole.technicaltest.application.service.impl.PriceServiceImpl;
 import com.capitole.technicaltest.domain.model.Price;
 import com.capitole.technicaltest.domain.port.PricePercistencePort;
-import com.capitole.technicaltest.infrastructure.inputport.web.PriceController;
 
 public class PriceControllerTest {
 

@@ -1,4 +1,4 @@
-package com.capitole.technicaltestcom.capitole.technicaltest.infrastructure.inputport.web;
+package com.capitole.technicaltest.infrastructure.inputport.web;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
