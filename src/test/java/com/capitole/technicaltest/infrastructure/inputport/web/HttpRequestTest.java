@@ -1,4 +1,4 @@
-package com.capitole.technicaltestcom.capitole.technicaltest.infrastructure.inputport.web;
+package com.capitole.technicaltest.infrastructure.inputport.web;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ public class HttpRequestTest {
 	// Test 1: petición a las 10:00 del día 14 del producto 35455 para la brand 1
 	// (ZARA)
 	@Test
-	void ifRequestTest1_ReturnOK() throws Exception {
+	void ifRequestTest1_thenReturnOK() throws Exception {
 		/*
 		 * expected response
 		 * 
@@ -68,7 +68,7 @@ public class HttpRequestTest {
 	// Test 2: petición a las 16:00 del día 14 del producto 35455 para la brand 1
 	// (ZARA)
 	@Test
-	void ifRequestTest2_ReturnOK() throws Exception {
+	void ifRequestTest2_thenReturnOK() throws Exception {
 		/*
 		 * expected response
 		 * 
@@ -105,7 +105,7 @@ public class HttpRequestTest {
 	// Test 3: petición a las 21:00 del día 14 del producto 35455 para la brand 1
 	// (ZARA)
 	@Test
-	void ifRequestTest3_ReturnOK() throws Exception {
+	void ifRequestTest3_thenReturnOK() throws Exception {
 		/*
 		 * expected response
 		 * 
@@ -143,7 +143,7 @@ public class HttpRequestTest {
 	// Test 4: petición a las 10:00 del día 15 del producto 35455 para la brand 1
 	// (ZARA)
 	@Test
-	void ifRequestTest4_ReturnOK() throws Exception {
+	void ifRequestTest4_thenReturnOK() throws Exception {
 		/*
 		 * expected response
 		 * 
@@ -181,7 +181,7 @@ public class HttpRequestTest {
 	// Test 5: petición a las 21:00 del día 16 del producto 35455 para la brand 1
 	// (ZARA)
 	@Test
-	void ifRequestTest5_ReturnOK() throws Exception {
+	void ifRequestTest5_thenReturnOK() throws Exception {
 		/*
 		 * expected response
 		 * 

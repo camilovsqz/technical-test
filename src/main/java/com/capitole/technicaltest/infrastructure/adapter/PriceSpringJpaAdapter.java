@@ -13,40 +13,44 @@ import com.capitole.technicaltest.infrastructure.adapter.mapper.PriceDboMapper;
 import com.capitole.technicaltest.infrastructure.adapter.repository.PriceRepository;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 
 /**
- * The Class PriceSpringJpaAdapter.
- * JPA Adapter interact with the Price entity
+ * The Class PriceSpringJpaAdapter. JPA Adapter interact with the Price entity
  */
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class PriceSpringJpaAdapter implements PricePercistencePort {
-	
+
 	/** The price dbo mapper. */
 	private final PriceDboMapper priceDboMapper;
-	
+
 	/** The price repository. */
 	private final PriceRepository priceRepository;
+
+	/**
+	 * Instantiates a new price spring jpa adapter.
+	 *
+	 * @param priceDboMapper  the price dbo mapper
+	 * @param priceRepository the price repository
+	 */
+	public PriceSpringJpaAdapter(PriceDboMapper priceDboMapper, PriceRepository priceRepository) {
+		this.priceDboMapper = priceDboMapper;
+		this.priceRepository = priceRepository;
+	}
 
 	/**
 	 * Find all by aplication date and product id and brand id.
 	 *
 	 * @param accurrencyDate the accurrency date
-	 * @param productId the product id
-	 * @param brandId the brand id
+	 * @param productId      the product id
+	 * @param brandId        the brand id
 	 * @return the list
 	 */
 	@Override
 	public List<Price> findAllByAplicationDateAndProductIdAndBrandId(Date accurrencyDate, int productId, int brandId) {
-		List<PriceEntity> priceList = priceRepository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqualAndProductIdAndBrandId(
-				accurrencyDate,
-				accurrencyDate,
-				productId,
-				brandId);
-		return priceList.stream()
-                .map(priceDboMapper::toDomain)
-                .collect(Collectors.toList());
+		List<PriceEntity> priceList = priceRepository
+				.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqualAndProductIdAndBrandId(accurrencyDate,
+						accurrencyDate, productId, brandId);
+		return priceList.stream().map(priceDboMapper::toDomain).collect(Collectors.toList());
 	}
 }
